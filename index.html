@@ -39,11 +39,48 @@
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Subtle shadow */
         }
 
+        /*  Mobile Navigation Styles */
+        .nav-toggle {  /*  The burger button */
+            display: none; /*  Hide by default on larger screens */
+            cursor: pointer;
+            padding: 10px;
+            background: transparent;
+            border: none;
+            position: absolute; /* Position it absolutely within the header */
+            left: 1rem;       /*  Align to the left */
+            top: 50%;         /*  Center vertically */
+            transform: translateY(-50%); /*  Adjust for perfect centering */
+        }
+        .nav-toggle-bar { /* Styling for the burger bars */
+            display: block;
+            width: 25px;
+            height: 3px;
+            background-color: white;
+            margin: 5px 0;
+            transition: transform 0.3s, opacity 0.3s; /* Smooth transitions */
+        }
+
         nav ul {
             list-style: none;
             display: flex;
             justify-content: center;
             gap: 1rem; /* Use gap for spacing */
+        }
+        /*  Mobile Navigation - Initially hidden */
+        nav ul.mobile-nav {
+            display: none; /* Start hidden */
+            flex-direction: column;
+            position: absolute; /* Position it below the header */
+            top: 100%;       /*  Start right below the header */
+            left: 0;
+            width: 100%;
+            background-color: #2c3e50; /* Same as header for consistency */
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Add a shadow */
+        }
+
+        nav ul.mobile-nav.show { /* When 'show' class is added, display the menu */
+            display: flex;
         }
 
         nav a {
@@ -59,6 +96,20 @@
             color: #ecf0f1;
             background-color: rgba(255, 255, 255, 0.1); /* Subtle background on hover */
         }
+
+        /*  Burger Menu Animation */
+        .nav-toggle.open .nav-toggle-bar:nth-child(1) {
+            transform: translateY(8px) rotate(45deg);
+        }
+
+        .nav-toggle.open .nav-toggle-bar:nth-child(2) {
+            opacity: 0;
+        }
+
+        .nav-toggle.open .nav-toggle-bar:nth-child(3) {
+            transform: translateY(-8px) rotate(-45deg);
+        }
+
 
         main {
           flex-grow: 1; /* main content will take the remaining space */
@@ -303,12 +354,55 @@
           color: white;
         }
 
+        /* Media Queries for Responsiveness */
+        @media (max-width: 768px) {
+            .nav-toggle {
+                display: block; /* Show burger button on small screens */
+            }
+
+            nav ul {
+                display: none; /* Hide the regular navigation */
+            }
+
+            header{
+                position: relative; /* so you can use absolute positioning*/
+            }
+
+            h1{
+               font-size: 1.8rem;
+            }
+            h2{
+                font-size: 1.6rem;
+            }
+            h3{
+                font-size: 1.4rem;
+            }
+
+            .plans-container {
+                padding: 1rem; /* Less padding on smaller screens */
+            }
+
+            .north-korea-image{
+                max-width: 90%;
+            }
+            .team-members{
+                grid-template-columns: 1fr; /*Single column */
+            }
+        }
+
     </style>
 </head>
 <body>
     <header>
+        <!-- Burger Button -->
+        <button class="nav-toggle" aria-label="Toggle navigation">
+            <span class="nav-toggle-bar"></span>
+            <span class="nav-toggle-bar"></span>
+            <span class="nav-toggle-bar"></span>
+        </button>
         <nav>
-            <ul>
+            <!--  Navigation (will be hidden on mobile initially) -->
+            <ul class="main-nav">
                 <li><a href="#home">Главная</a></li>
                 <li><a href="#tarify">Тарифы</a></li>
                 <li><a href="#contacts">Контакты</a></li>
@@ -529,6 +623,36 @@
               faqItem.classList.toggle('active');
           });
       });
+
+      // JavaScript for the Burger Menu
+        const navToggle = document.querySelector('.nav-toggle');
+        const navMenu = document.querySelector('nav ul');
+
+        navToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('show');  // Add/remove 'show' class
+            navToggle.classList.toggle('open'); // Add/remove 'open' class for the animation
+
+            //  Crucial:  Handle case where main nav is *also* visible (desktop)
+            if (window.innerWidth <= 768) { //  Only apply on mobile
+                navMenu.classList.add('mobile-nav'); // Ensure correct styling on mobile
+             }
+        });
+
+         // Hide the mobile menu when the window is resized above 768px
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 768) {
+              navMenu.classList.remove('show', 'mobile-nav');
+              navToggle.classList.remove('open'); // reset the button state
+              navMenu.style.display = ''; // remove any inline display styles
+            } else {
+                navMenu.classList.add('mobile-nav'); // Ensure .mobile-nav is added
+            }
+        });
+
+        // Initial check on load
+        if (window.innerWidth <= 768) {
+            navMenu.classList.add('mobile-nav');
+        }
     </script>
 </body>
 </html>

@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Виза в Северную Корею</title>
+    <meta name="description" content="Сайт kndr.visa.kr поможет вам быстро и без заморочки оформить визу и уже завтра поехать в гости к Ким Чен Ыну!">
+    <meta name="author" content="KVI">
+    <meta name="robots" content="index, follow">
+    <!--  Preload fonts if possible, improve performance -->
+    <link rel="preload" href="path/to/your/font.woff2" as="font" type="font/woff2" crossorigin>
+
+    <style>
+        /* Reset some default styles */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* More modern font stack */
+            line-height: 1.6;
+            background-color: #f4f4f4; /* Lighter background */
+            color: #333; /* Darker text for better contrast */
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh; /* Ensure the body takes at least the full viewport height */
+        }
+
+        header {
+            background-color: #2c3e50; /* Darker, more modern color */
+            color: #fff;
+            padding: 1rem 0;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 1rem; /* Use gap for spacing */
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease; /* Smoother transition */
+            padding: 0.5rem 1rem; /* Add some padding for better clickability */
+            display: inline-block;  /* Needed for padding to work correctly on inline elements*/
+            border-radius: 4px; /* Rounded corners */
+        }
+        nav a:hover, nav a:focus { /* Combine hover and focus styles */
+            color: #ecf0f1;
+            background-color: rgba(255, 255, 255, 0.1); /* Subtle background on hover */
+        }
+
+        main {
+          flex-grow: 1; /* main content will take the remaining space */
+        }
+
+        .plans-container {
+            display: grid;  /* Use CSS Grid for better layout control */
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Responsive grid */
+            gap: 1.5rem; /* Consistent spacing */
+            padding: 1.5rem;
+            max-width: 1200px; /* Limit maximum width */
+            margin: 0 auto;  /* Center the container */
+        }
+
+        .plan {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* More modern shadow */
+            padding: 1.5rem;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions */
+            border: 1px solid #ddd; /* Subtle border */
+        }
+
+        .plan:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Larger shadow on hover */
+        }
+
+        .plan h3 {
+            font-size: 1.5rem; /* Consistent units */
+            margin-bottom: 1rem;
+            color: #2c3e50; /* Use a consistent color */
+        }
+
+        .plan ul {
+            list-style: none;
+            margin-bottom: 1.5rem;
+            text-align: left; /* Align list items to the left */
+        }
+
+        .plan li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #eee;
+            display: flex;        /*  use flexbox for better vertical alignment */
+            align-items: center;  /*  vertically center the text  */
+        }
+
+        .plan li:last-child {
+            border-bottom: none;
+        }
+
+        .plan .price {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #e74c3c; /* Distinct color for the price */
+        }
+
+        h1, h2, h3 {
+            text-align: center;
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+            color: #2c3e50;
+            line-height: 1.2;  /* Improve readability for headings */
+        }
+        h1 {
+          font-size: 2.5rem;
+        }
+        h2 {
+          font-size: 2rem;
+        }
+        h3 {
+          font-size: 1.75rem;
+        }
+
+        .contact-section {
+            background-color: #34495e; /* Consistent color scheme */
+            color: #fff;
+            padding: 1.5rem;
+            text-align: center;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            max-width: 800px; /* Limit width for better readability */
+            margin: 1.5rem auto; /* Center the section */
+        }
+
+        .contact-section h2 {
+            margin-bottom: 1rem;
+            color: #fff; /* Ensure text is white */
+        }
+
+        .contact-section p {
+            margin-bottom: 0.5rem;
+        }
+
+        .north-korea-image {
+            display: block;
+            margin: 1.5rem auto;
+            max-width: 50%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Darkened shadow */
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .north-korea-image:hover { /* Slight scaling and shadow increase*/
+            transform: scale(1.05);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.4)
+        }
+
+        /* Section Styles (for navigation) */
+        section {
+          padding-top: 4rem;  /* Adjusted padding for better spacing */
+          scroll-margin-top: 4rem; /* Handle sticky header overlap with smooth scrolling*/
+        }
+
+        /* Button Styling (add a call to action) */
+        .cta-button {
+            display: inline-block;
+            background-color: #e74c3c; /* Use the price color */
+            color: white;
+            padding: 0.75rem 1.5rem;
+            text-decoration: none;
+            border-radius: 4px;
+            margin-top: 1rem;
+            transition: background-color 0.3s ease;
+            border: none; /* Remove default button borders */
+            cursor: pointer; /* Indicate interactivity */
+            font-weight: bold;
+        }
+        .cta-button:hover, .cta-button:focus {
+            background-color: #c0392b; /* Darker shade on hover */
+            outline: none; /* Remove outline on focus */
+        }
+
+        /*  FAQ Section Styles */
+        .faq-section {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 1.5rem;
+        }
+        .faq-item {
+            margin-bottom: 1rem;
+            border-bottom: 1px solid #ddd;
+        }
+        .faq-question {
+            font-weight: bold;
+            cursor: pointer;
+            display: flex; /* use flexbox to align the question and the + sign */
+            justify-content: space-between;
+            align-items: center;
+            padding: .5rem 0;
+        }
+      .faq-answer {
+            padding: 0.5rem 0;
+            display: none; /* Hide by default */
+        }
+       .faq-item.active .faq-answer { /* show the answer when the question is "active" */
+            display: block;
+        }
+
+        /*  Add a + / - icon to indicate expand/collapse */
+        .faq-icon {
+            font-size: 1.2em;
+            transition: transform 0.3s ease;
+        }
+        .faq-item.active .faq-icon{
+            transform: rotate(45deg);
+        }
+
+        /* Our Team Section Styles */
+        .our-team-section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1.5rem;
+            text-align: center; /* Center the content */
+        }
+
+        .team-members {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsive grid */
+            gap: 1.5rem;
+        }
+        .team-member {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 1rem;
+        }
+
+        .team-member img {
+            width: 150px; /* Fixed size, adjust as needed */
+            height: 200px; /* Fixed size, adjust as needed */
+            border-radius: 20px; /* Circular images */
+            object-fit: cover; /* Ensure the image covers the area */
+            margin-bottom: 0.5rem;
+            border: 3px solid #ddd;
+        }
+        .team-member h4 {
+            margin-bottom: 0.25rem;
+        }
+
+        .team-member p {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        /* Testimonials Section Styles */
+        .testimonials-section {
+          max-width: 1200px;
+          margin: 0 auto;
+          padding: 1.5rem;
+        }
+        .testimonials {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsive grid */
+          gap: 1.5rem;
+        }
+        .testimonial {
+          background-color: #fff;
+          border-radius: 8px;
+          box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+          padding: 1.5rem;
+          text-align: left;
+          border: 1px solid #ddd; /* Add subtle border */
+        }
+
+        .testimonial p {
+          margin-bottom: 0.5rem;
+            line-height: 1.4;
+        }
+        .testimonial-author {
+          font-style: italic;
+          color: #666;
+          text-align: right;
+          margin-top: .5rem;
+        }
+
+        footer { /* Simple footer */
+          text-align: center;
+          padding: 1rem;
+          background-color: #2c3e50;
+          color: white;
+        }
+
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="#home">Главная</a></li>
+                <li><a href="#tarify">Тарифы</a></li>
+                <li><a href="#contacts">Контакты</a></li>
+                <li><a href="#faq">FAQ</a></li>
+                <li><a href="#our-team">Наша команда</a></li>
+                <li><a href="#testimonials">Отзывы</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="home">
+            <h1>Виза в КНДР</h1>
+            <h2>Выберите тарифный план</h2>
+
+            <img src="https://s0.rbk.ru/v6_top_pics/media/img/6/73/347259489356736.jpeg" alt="Северная Корея" class="north-korea-image">
+        </section>
+
+        <section id="tarify">
+            <div class="plans-container">
+
+                <div class="plan">
+                    <h3>Basic</h3>
+                    <ul>
+                        <li>Виза</li>
+                    </ul>
+                    <p class="price">2999 руб</p>
+                    <a href="#contacts" class="cta-button">Заказать</a>
+                </div>
+
+                <div class="plan">
+                    <h3>Starter</h3>
+                    <ul>
+                        <li>Виза</li>
+                        <li>Билет на самолёт</li>
+                    </ul>
+                    <p class="price">5999 руб</p>
+                    <a href="#contacts" class="cta-button">Заказать</a>
+                </div>
+
+                <div class="plan">
+                    <h3>Pro</h3>
+                    <ul>
+                        <li>Виза</li>
+                        <li>Билет на самолёт</li>
+                        <li>Проживание</li>
+                    </ul>
+                    <p class="price">10999 руб</p>
+                    <a href="#contacts" class="cta-button">Заказать</a>
+                </div>
+
+                <div class="plan">
+                    <h3>Premium</h3>
+                    <ul>
+                        <li>Виза</li>
+                        <li>Билет на самолёт</li>
+                        <li>Проживание</li>
+                        <li>Разрешение на ношение любой одежды и прически</li>
+                    </ul>
+                    <p class="price">19999 руб</p>
+                    <a href="#contacts" class="cta-button">Заказать</a>
+                </div>
+
+                <div class="plan">
+                    <h3>Delux</h3>
+                    <ul>
+                        <li>Виза</li>
+                        <li>Билет на самолёт</li>
+                        <li>Проживание</li>
+                        <li>Разрешение на ношение любой одежды и прически</li>
+                        <li>Персональная встреча с Ким Чен Ыном</li>
+                    </ul>
+                    <p class="price">29999 руб</p>
+                    <a href="#contacts" class="cta-button">Заказать</a>
+                </div>
+
+                <div class="plan">
+                    <h3>Enterprise</h3>
+                    <ul>
+                        <li>Виза</li>
+                        <li>Билет на самолёт</li>
+                        <li>Проживание</li>
+                        <li>Разрешение на ношение любой одежды и прически</li>
+                        <li>Персональная встреча с Ким Чен Ыном</li>
+                        <li>Для больших компаний (от 10 человек)</li>
+                    </ul>
+                    <p class="price">от 99999 руб</p>
+                    <a href="#contacts" class="cta-button">Заказать</a>
+                </div>
+
+            </div>
+        </section>
+
+        <section id="our-team" class="our-team-section">
+            <h2>Наша команда</h2>
+            <div class="team-members">
+                <div class="team-member">
+                    <img src="https://i.ibb.co/zTL0PH4Y/photo-2025-02-24-20-25-21.jpg" alt="Иван Иванов">
+                    <h4>Павел Сепчук</h4>
+                    <p>Менеджер по работе с клиентами</p>
+                </div>
+                <div class="team-member">
+                    <img src="https://i.ibb.co/spCByy93/photo-1-2025-02-24-20-14-34.jpg" alt="Мария Петрова">
+                    <h4>Алексей Скуфьин</h4>
+                    <p>Специалист по визам</p>
+                </div>
+                <div class="team-member">
+                    <img src="https://i.ibb.co/KcwJhDCz/photo-1-2025-02-24-20-22-29.jpg" alt="Алексей Смирнов">
+                    <h4>Марина Михайловна</h4>
+                    <p>Руководитель отдела</p>
+                </div>
+                <div class="team-member">
+                    <img src="https://i.ibb.co/SDwnS3pr/photo-3-2025-02-24-21-17-46.jpg" alt="Иван Иванов">
+                    <h4>Дмитрий Ладесов</h4>
+                    <p>Генеральный директор</p>
+                </div>
+                <div class="team-member">
+                    <img src="https://i.ibb.co/9HDDJ424/photo-1-2025-02-24-21-17-46.jpg" alt="Мария Петрова">
+                    <h4>Азамат Сагдиев</h4>
+                    <p>Гид по Северной Корее</p>
+                </div>
+                <div class="team-member">
+                    <img src="https://i.ibb.co/TBMvNXfB/photo-2-2025-02-24-21-17-46.jpg" alt="Алексей Смирнов">
+                    <h4>Светлана Алексеевна</h4>
+                    <p>Руководитель отдела продаж</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="testimonials" class="testimonials-section">
+          <h2>Отзывы</h2>
+          <div class="testimonials">
+              <div class="testimonial">
+                <p>"Очень доволен сервисом! Визу оформили быстро и без проблем. Спасибо!"</p>
+                <p class="testimonial-author">- Андрей</p>
+              </div>
+               <div class="testimonial">
+                <p>"Рекомендую! Легко и удобно, все четко объяснили, помогли со всеми вопросами!"</p>
+                <p class="testimonial-author">- Екатерина</p>
+              </div>
+               <div class="testimonial">
+                <p>"Все отлично. Получил визу за 12 дней, поддержка всегда была на связи."</p>
+                <p class="testimonial-author">- Сергей</p>
+              </div>
+                <div class="testimonial">
+                  <p>"Выбрал тариф Premium. Все включено, очень удобно для тех, кто ценит свое время."</p>
+                  <p class="testimonial-author">- Михаил</p>
+              </div>
+               <div class="testimonial">
+                  <p>"Оформляли групповую визу. Остались довольны, менеджеры профессионально все организовали."</p>
+                  <p class="testimonial-author">- Группа туристов</p>
+                </div>
+          </div>
+        </section>
+
+        <section id="faq" class="faq-section">
+            <h2>Часто задаваемые вопросы</h2>
+            <div class="faq-item">
+                <div class="faq-question">
+                  <span>Как быстро я получу визу?</span>
+                  <span class="faq-icon">+</span>
+                </div>
+                <div class="faq-answer">
+                    Обычно оформление визы занимает от 10 до 20 рабочих дней. При некоторых объстоятельствах (к примеру, нарушение договора) может затянуться до 2 месяцев
+                </div>
+            </div>
+            <div class="faq-item">
+              <div class="faq-question">
+                <span>Какие документы нужны для оформления визы?</span>
+                <span class="faq-icon">+</span>
+              </div>
+
+                <div class="faq-answer">
+                    Вам понадобится загранпаспорт, фотография и заполненная анкета.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                  <span>Есть ли гарантия возврата из КНДР?</span>
+                  <span class="faq-icon">+</span>
+                </div>
+  
+                  <div class="faq-answer">
+                      К сожалению, наша команда не предоставляет возможности вернуться из Северной Корее, но по дополнительной плате (120 тыс. рублей) можно получить гарантию на возврат, только если у вас есть связи с правительством КНДР.
+                  </div>
+              </div>
+
+            <div class="faq-item">
+               <div class="faq-question">
+                    <span>Могу ли я изменить свой тарифный план?</span>
+                    <span class="faq-icon">+</span>
+                </div>
+                <div class="faq-answer">
+                    Да, вы можете изменить свой тарифный план в любое время, связавшись с нашей службой поддержки по почте предоставленной в <a href="#contacts">контактах</a>.
+                </div>
+            </div>
+        </section>
+
+        <section id="contacts" class="contact-section">
+            <h2>Контакты</h2>
+            <p>Email: info@kndr.visa.kr</p>
+            <p>Телефон: +7 (495) 123-45-67</p>
+            <p>Адрес: Москва, ул. Ким Ир Сена, д. 17</p>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>© 2025 KNDR Visa.  Весь контент является приколом.</p>
+    </footer>
+
+    <script>
+      //  JavaScript for the FAQ section
+      document.querySelectorAll('.faq-question').forEach(question => {
+          question.addEventListener('click', () => {
+              const faqItem = question.parentElement;
+              faqItem.classList.toggle('active');
+          });
+      });
+    </script>
+</body>
+</html>

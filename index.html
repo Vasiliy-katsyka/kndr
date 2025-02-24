@@ -26,10 +26,13 @@
             display: flex;
             flex-direction: column;
             min-height: 100vh; /* Ensure the body takes at least the full viewport height */
+             /* Smooth gradient background */
+            background: linear-gradient(135deg, #f4f4f4 0%, #e0e0e0 100%);
         }
 
         header {
-            background-color: #2c3e50; /* Darker, more modern color */
+            /* Darker, more modern color with gradient */
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
             color: #fff;
             padding: 1rem 0;
             text-align: center;
@@ -74,7 +77,8 @@
             top: 100%;       /*  Start right below the header */
             left: 0;
             width: 100%;
-            background-color: #2c3e50; /* Same as header for consistency */
+           /* Same as header for consistency with gradient*/
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
             text-align: center;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Add a shadow */
         }
@@ -186,14 +190,13 @@
         }
 
         .contact-section {
-            background-color: #34495e; /* Consistent color scheme */
             color: #fff;
             padding: 1.5rem;
             text-align: center;
             border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             max-width: 800px; /* Limit width for better readability */
             margin: 1.5rem auto; /* Center the section */
+            margin-top: 0.5rem;
         }
 
         .contact-section h2 {
@@ -228,7 +231,8 @@
         /* Button Styling (add a call to action) */
         .cta-button {
             display: inline-block;
-            background-color: #e74c3c; /* Use the price color */
+             /* Gradient for buttons */
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
             color: white;
             padding: 0.75rem 1.5rem;
             text-decoration: none;
@@ -238,10 +242,14 @@
             border: none; /* Remove default button borders */
             cursor: pointer; /* Indicate interactivity */
             font-weight: bold;
+             /* Slight shadow for depth */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
         .cta-button:hover, .cta-button:focus {
-            background-color: #c0392b; /* Darker shade on hover */
+             /* Darker shade on hover with gradient */
+            background: linear-gradient(135deg, #c0392b 0%, #a0291a 100%);
             outline: none; /* Remove outline on focus */
+
         }
 
         /*  FAQ Section Styles */
@@ -347,10 +355,58 @@
           margin-top: .5rem;
         }
 
+/* Merch Section Styles */
+.merch-section {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1.5rem;
+    text-align: center;
+}
+
+.merch-items {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+.merch-item {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 1rem;
+    text-align: center;
+    border: 1px solid #ddd; /* Add a subtle border */
+}
+
+.merch-item img {
+    width: 100%; /* Make images responsive within their container */
+    height: auto; /* Limit image height */
+    object-fit: cover; /* Ensure images cover the space */
+    border-radius: 8px;
+    margin-bottom: 0.5rem;
+}
+
+.merch-item h4 {
+    margin-bottom: 0.5rem;
+    color: #2c3e50;
+}
+
+.merch-item p {
+    color: #666;
+    margin-bottom: 0.75rem;
+}
+
+.merch-item .price {
+    font-weight: bold;
+    color: #e74c3c;
+    margin-bottom: 0.5rem;
+}
+
         footer { /* Simple footer */
           text-align: center;
           padding: 1rem;
-          background-color: #2c3e50;
+          /* Gradient for footer */
+          background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
           color: white;
         }
 
@@ -409,6 +465,7 @@
                 <li><a href="#faq">FAQ</a></li>
                 <li><a href="#our-team">Наша команда</a></li>
                 <li><a href="#testimonials">Отзывы</a></li>
+                <li><a href="#merch">Мерч</a></li> <!-- Added Merch Link -->
             </ul>
         </nav>
     </header>
@@ -532,6 +589,37 @@
             </div>
         </section>
 
+        <!-- Merch Section -->
+        <section id="merch" class="merch-section">
+            <h2>Мерч</h2>
+            <div class="merch-items">
+                <div class="merch-item">
+                    <img src="https://i.ibb.co/9kyCtVN2/photo-1-2025-02-24-22-37-37.jpg" alt="Футболка 1">
+                    <h4>Футболка "Лидер"</h4>
+                    <p>Классическая футболка с изображением лидера.</p>
+                    <p class="price">1800 руб</p>
+                    <a href="#contacts" class="cta-button">Заказать</a>
+                </div>
+                <div class="merch-item">
+                    <img src="https://i.ibb.co/Z1HG2DK0/photo-3-2025-02-24-22-37-37.jpg" alt="Футболка 2">
+                    <h4>Футболка "Чосон"</h4>
+                    <p>Футболка с ярким пропагандистским плакатом.</p>
+                    <p class="price">1800 руб</p>
+                    <a href="#contacts" class="cta-button">Заказать</a>
+                </div>
+                <div class="merch-item">
+                    <img src="https://i.ibb.co/8FqPnpn/photo-2-2025-02-24-22-37-37.jpg" alt="Футболка 3">
+                    <h4>Футболка "КНДР"</h4>
+                    <p>Футболка с видом на Пхеньян.</p>
+                    <p class="price">1500 руб</p>
+            <a href="#contacts" class="cta-button">Заказать</a>
+            <!-- <a href="https://imgbb.com/"><img src="https://i.ibb.co/9kyCtVN2/photo-1-2025-02-24-22-37-37.jpg" alt="photo-1-2025-02-24-22-37-37" border="0"></a>
+<a href="https://imgbb.com/"><img src="https://i.ibb.co/8FqPnpn/photo-2-2025-02-24-22-37-37.jpg" alt="photo-2-2025-02-24-22-37-37" border="0"></a>
+<a href="https://imgbb.com/"><img src="https://i.ibb.co/Z1HG2DK0/photo-3-2025-02-24-22-37-37.jpg" alt="photo-3-2025-02-24-22-37-37" border="0"></a> -->
+        </div>
+            </div>
+        </section>
+
         <section id="testimonials" class="testimonials-section">
           <h2>Отзывы</h2>
           <div class="testimonials">
@@ -602,16 +690,15 @@
             </div>
         </section>
 
+    </main>
+
+    <footer>
         <section id="contacts" class="contact-section">
             <h2>Контакты</h2>
             <p>Email: info@kndr.visa.kr</p>
             <p>Телефон: +7 (495) 123-45-67</p>
             <p>Адрес: Москва, ул. Ким Ир Сена, д. 17</p>
         </section>
-
-    </main>
-
-    <footer>
         <p>© 2025 KNDR Visa.  Весь контент является приколом.</p>
     </footer>
 

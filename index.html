@@ -11,440 +11,420 @@
     <link rel="preload" href="path/to/your/font.woff2" as="font" type="font/woff2" crossorigin>
 
     <style>
-        /* Reset some default styles */
-        *, *::before, *::after {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
+        /* ---  Existing Styles (from previous code) --- */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; background-color: #f4f4f4; color: #333; display: flex; flex-direction: column; min-height: 100vh; background: linear-gradient(135deg, #f4f4f4 0%, #e0e0e0 100%);}
+        header { background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%); color: #fff; padding: 1rem 0; text-align: center; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);}
+        .nav-toggle { display: none; cursor: pointer; padding: 10px; background: transparent; border: none; position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); }
+        .nav-toggle-bar { display: block; width: 25px; height: 3px; background-color: white; margin: 5px 0; transition: transform 0.3s, opacity 0.3s;}
+        nav ul { list-style: none; display: flex; justify-content: center; gap: 1rem;}
+        nav ul.mobile-nav { display: none; flex-direction: column; position: absolute; top: 100%; left: 0; width: 100%; background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%); text-align: center; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);}
+        nav ul.mobile-nav.show { display: flex; }
+        nav a { color: #fff; text-decoration: none; font-weight: bold; transition: color 0.3s ease; padding: 0.5rem 1rem; display: inline-block; border-radius: 4px;}
+        nav a:hover, nav a:focus { color: #ecf0f1; background-color: rgba(255, 255, 255, 0.1);}
+        .nav-toggle.open .nav-toggle-bar:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+        .nav-toggle.open .nav-toggle-bar:nth-child(2) { opacity: 0; }
+        .nav-toggle.open .nav-toggle-bar:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+        main { flex-grow: 1;}
+        .plans-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; padding: 1.5rem; max-width: 1200px; margin: 0 auto;}
+        .plan { background-color: #fff; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); padding: 1.5rem; text-align: center; transition: transform 0.3s ease, box-shadow 0.3s ease; border: 1px solid #ddd;}
+        .plan:hover { transform: translateY(-5px); box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);}
+        .plan h3 { font-size: 1.5rem; margin-bottom: 1rem; color: #2c3e50;}
+        .plan ul { list-style: none; margin-bottom: 1.5rem; text-align: left;}
+        .plan li { padding: 0.5rem 0; border-bottom: 1px solid #eee; display: flex; align-items: center;}
+        .plan li:last-child { border-bottom: none; }
+        .plan .price { font-size: 1.2rem; font-weight: bold; color: #e74c3c;}
+        h1, h2, h3 { text-align: center; margin-top: 1.5rem; margin-bottom: 1rem; color: #2c3e50; line-height: 1.2;}
+        h1 { font-size: 2.5rem; }
+        h2 { font-size: 2rem; }
+        .contact-section { color: #fff; padding: 1.5rem; text-align: center; border-radius: 8px; max-width: 800px; margin: 1.5rem auto; margin-top: 0.5rem;}
+        .contact-section h2 { margin-bottom: 1rem; color: #fff; }
+        .contact-section p { margin-bottom: 0.5rem; }
+        .north-korea-image { display: block; margin: 1.5rem auto; max-width: 50%; height: auto; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); transition: transform 0.3s ease, box-shadow 0.3s ease;}
+        .north-korea-image:hover { transform: scale(1.05); box-shadow: 0 8px 16px rgba(0,0,0,0.4) }
+        section { padding-top: 4rem; scroll-margin-top: 4rem;}
+        .cta-button { display: inline-block; background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%); color: white; padding: 0.75rem 1.5rem; text-decoration: none; border-radius: 4px; margin-top: 1rem; transition: background-color 0.3s ease; border: none; cursor: pointer; font-weight: bold; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);}
+        .cta-button:hover, .cta-button:focus { background: linear-gradient(135deg, #c0392b 0%, #a0291a 100%); outline: none;}
+        .faq-section { max-width: 800px; margin: 0 auto; padding: 1.5rem; }
+        .faq-item { margin-bottom: 1rem; border-bottom: 1px solid #ddd; }
+        .faq-question { font-weight: bold; cursor: pointer; display: flex; justify-content: space-between; align-items: center; padding: .5rem 0; }
+        .faq-answer { padding: 0.5rem 0; display: none;}
+        .faq-item.active .faq-answer { display: block;}
+        .faq-icon { font-size: 1.2em; transition: transform 0.3s ease;}
+        .faq-item.active .faq-icon{ transform: rotate(45deg); }
+        .our-team-section { max-width: 1200px; margin: 0 auto; padding: 1.5rem; text-align: center; }
+        .team-members { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem;}
+        .team-member { background-color: #fff; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); padding: 1rem; }
+        .team-member img { width: 150px; height: 200px; border-radius: 20px; object-fit: cover; margin-bottom: 0.5rem; border: 3px solid #ddd; }
+        .team-member h4 { margin-bottom: 0.25rem; }
+        .team-member p { font-size: 0.9rem; color: #666; }
+        .testimonials-section { max-width: 1200px; margin: 0 auto; padding: 1.5rem;}
+        .testimonials { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem;}
+        .testimonial { background-color: #fff; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); padding: 1.5rem; text-align: left; border: 1px solid #ddd;}
+        .testimonial p { margin-bottom: 0.5rem; line-height: 1.4;}
+        .testimonial-author { font-style: italic; color: #666; text-align: right; margin-top: .5rem;}
+        .merch-section { max-width: 1200px; margin: 0 auto; padding: 1.5rem; text-align: center;}
+        .merch-items { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem;}
+        .merch-item { background-color: #fff; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); padding: 1rem; text-align: center; border: 1px solid #ddd;}
+        .merch-item img { width: 100%; height: auto; object-fit: cover; border-radius: 8px; margin-bottom: 0.5rem;}
+        .merch-item h4 { margin-bottom: 0.5rem; color: #2c3e50;}
+        .merch-item p { color: #666; margin-bottom: 0.75rem;}
+        .merch-item .price { font-weight: bold; color: #e74c3c; margin-bottom: 0.5rem;}
+        footer { text-align: center; padding: 1rem; background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%); color: white;}
+        @media (max-width: 768px) {
+            .nav-toggle { display: block;}
+            nav ul { display: none;}
+            header{ position: relative;}
+            h1{ font-size: 1.8rem; }
+            h2{ font-size: 1.6rem; }
+            h3{ font-size: 1.4rem; }
+            .plans-container { padding: 1rem; }
+            .north-korea-image{ max-width: 90%;}
+            .team-members{ grid-template-columns: 1fr;}
         }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* More modern font stack */
-            line-height: 1.6;
-            background-color: #f4f4f4; /* Lighter background */
-            color: #333; /* Darker text for better contrast */
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh; /* Ensure the body takes at least the full viewport height */
-             /* Smooth gradient background */
-            background: linear-gradient(135deg, #f4f4f4 0%, #e0e0e0 100%);
-        }
 
-        header {
-            /* Darker, more modern color with gradient */
-            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
-            color: #fff;
-            padding: 1rem 0;
-            text-align: center;
-            position: sticky;
+        /* --- New Styles for Forms and Popups --- */
+        .overlay {
+            display: none; /* Hidden by default */
+            position: fixed;
             top: 0;
-            z-index: 100;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Subtle shadow */
-        }
-
-        /*  Mobile Navigation Styles */
-        .nav-toggle {  /*  The burger button */
-            display: none; /*  Hide by default on larger screens */
-            cursor: pointer;
-            padding: 10px;
-            background: transparent;
-            border: none;
-            position: absolute; /* Position it absolutely within the header */
-            left: 1rem;       /*  Align to the left */
-            top: 50%;         /*  Center vertically */
-            transform: translateY(-50%); /*  Adjust for perfect centering */
-        }
-        .nav-toggle-bar { /* Styling for the burger bars */
-            display: block;
-            width: 25px;
-            height: 3px;
-            background-color: white;
-            margin: 5px 0;
-            transition: transform 0.3s, opacity 0.3s; /* Smooth transitions */
-        }
-
-        nav ul {
-            list-style: none;
-            display: flex;
-            justify-content: center;
-            gap: 1rem; /* Use gap for spacing */
-        }
-        /*  Mobile Navigation - Initially hidden */
-        nav ul.mobile-nav {
-            display: none; /* Start hidden */
-            flex-direction: column;
-            position: absolute; /* Position it below the header */
-            top: 100%;       /*  Start right below the header */
             left: 0;
             width: 100%;
-           /* Same as header for consistency with gradient*/
-            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
-            text-align: center;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Add a shadow */
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+            z-index: 1000; /* Above everything else */
+            justify-content: center;
+            align-items: center;
         }
 
-        nav ul.mobile-nav.show { /* When 'show' class is added, display the menu */
-            display: flex;
+        .overlay.active {
+            display: flex; /* Show when active */
         }
 
-        nav a {
-            color: #fff;
-            text-decoration: none;
-            font-weight: bold;
-            transition: color 0.3s ease; /* Smoother transition */
-            padding: 0.5rem 1rem; /* Add some padding for better clickability */
-            display: inline-block;  /* Needed for padding to work correctly on inline elements*/
-            border-radius: 4px; /* Rounded corners */
-        }
-        nav a:hover, nav a:focus { /* Combine hover and focus styles */
-            color: #ecf0f1;
-            background-color: rgba(255, 255, 255, 0.1); /* Subtle background on hover */
-        }
-
-        /*  Burger Menu Animation */
-        .nav-toggle.open .nav-toggle-bar:nth-child(1) {
-            transform: translateY(8px) rotate(45deg);
-        }
-
-        .nav-toggle.open .nav-toggle-bar:nth-child(2) {
-            opacity: 0;
-        }
-
-        .nav-toggle.open .nav-toggle-bar:nth-child(3) {
-            transform: translateY(-8px) rotate(-45deg);
-        }
-
-
-        main {
-          flex-grow: 1; /* main content will take the remaining space */
-        }
-
-        .plans-container {
-            display: grid;  /* Use CSS Grid for better layout control */
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Responsive grid */
-            gap: 1.5rem; /* Consistent spacing */
-            padding: 1.5rem;
-            max-width: 1200px; /* Limit maximum width */
-            margin: 0 auto;  /* Center the container */
-        }
-
-        .plan {
+        .popup {
             background-color: #fff;
             border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* More modern shadow */
-            padding: 1.5rem;
-            text-align: center;
-            transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions */
-            border: 1px solid #ddd; /* Subtle border */
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            padding: 2rem;
+            width: 90%;  /* Responsive width */
+            max-width: 500px; /* Maximum width */
+            position: relative; /* For the close button */
         }
 
-        .plan:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Larger shadow on hover */
+        .popup-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #999;
+            border: none;       /* Remove default button styles */
+            background: none;   /* Remove default button styles */
+            padding: 0;        /* Remove default button styles */
+            line-height: 1;    /* Ensure the × is properly aligned */
         }
 
-        .plan h3 {
-            font-size: 1.5rem; /* Consistent units */
-            margin-bottom: 1rem;
-            color: #2c3e50; /* Use a consistent color */
+        .popup-close:hover {
+            color: #333;
         }
 
-        .plan ul {
-            list-style: none;
-            margin-bottom: 1.5rem;
-            text-align: left; /* Align list items to the left */
-        }
-
-        .plan li {
-            padding: 0.5rem 0;
-            border-bottom: 1px solid #eee;
-            display: flex;        /*  use flexbox for better vertical alignment */
-            align-items: center;  /*  vertically center the text  */
-        }
-
-        .plan li:last-child {
-            border-bottom: none;
-        }
-
-        .plan .price {
-            font-size: 1.2rem;
-            font-weight: bold;
-            color: #e74c3c; /* Distinct color for the price */
-        }
-
-        h1, h2, h3 {
-            text-align: center;
-            margin-top: 1.5rem;
+        .popup h3 {
             margin-bottom: 1rem;
             color: #2c3e50;
-            line-height: 1.2;  /* Improve readability for headings */
-        }
-        h1 {
-          font-size: 2.5rem;
-        }
-        h2 {
-          font-size: 2rem;
-        }
-        h3 {
-          font-size: 1.75rem;
         }
 
-        .contact-section {
-            color: #fff;
-            padding: 1.5rem;
-            text-align: center;
-            border-radius: 8px;
-            max-width: 800px; /* Limit width for better readability */
-            margin: 1.5rem auto; /* Center the section */
-            margin-top: 0.5rem;
-        }
-
-        .contact-section h2 {
-            margin-bottom: 1rem;
-            color: #fff; /* Ensure text is white */
-        }
-
-        .contact-section p {
-            margin-bottom: 0.5rem;
-        }
-
-        .north-korea-image {
-            display: block;
-            margin: 1.5rem auto;
-            max-width: 50%;
-            height: auto;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Darkened shadow */
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .north-korea-image:hover { /* Slight scaling and shadow increase*/
-            transform: scale(1.05);
-            box-shadow: 0 8px 16px rgba(0,0,0,0.4)
-        }
-
-        /* Section Styles (for navigation) */
-        section {
-          padding-top: 4rem;  /* Adjusted padding for better spacing */
-          scroll-margin-top: 4rem; /* Handle sticky header overlap with smooth scrolling*/
-        }
-
-        /* Button Styling (add a call to action) */
-        .cta-button {
-            display: inline-block;
-             /* Gradient for buttons */
-            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
-            color: white;
-            padding: 0.75rem 1.5rem;
-            text-decoration: none;
-            border-radius: 4px;
-            margin-top: 1rem;
-            transition: background-color 0.3s ease;
-            border: none; /* Remove default button borders */
-            cursor: pointer; /* Indicate interactivity */
-            font-weight: bold;
-             /* Slight shadow for depth */
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-        }
-        .cta-button:hover, .cta-button:focus {
-             /* Darker shade on hover with gradient */
-            background: linear-gradient(135deg, #c0392b 0%, #a0291a 100%);
-            outline: none; /* Remove outline on focus */
-
-        }
-
-        /*  FAQ Section Styles */
-        .faq-section {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 1.5rem;
-        }
-        .faq-item {
-            margin-bottom: 1rem;
-            border-bottom: 1px solid #ddd;
-        }
-        .faq-question {
-            font-weight: bold;
-            cursor: pointer;
-            display: flex; /* use flexbox to align the question and the + sign */
-            justify-content: space-between;
-            align-items: center;
-            padding: .5rem 0;
-        }
-      .faq-answer {
-            padding: 0.5rem 0;
-            display: none; /* Hide by default */
-        }
-       .faq-item.active .faq-answer { /* show the answer when the question is "active" */
-            display: block;
-        }
-
-        /*  Add a + / - icon to indicate expand/collapse */
-        .faq-icon {
-            font-size: 1.2em;
-            transition: transform 0.3s ease;
-        }
-        .faq-item.active .faq-icon{
-            transform: rotate(45deg);
-        }
-
-        /* Our Team Section Styles */
-        .our-team-section {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 1.5rem;
-            text-align: center; /* Center the content */
-        }
-
-        .team-members {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsive grid */
-            gap: 1.5rem;
-        }
-        .team-member {
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            padding: 1rem;
-        }
-
-        .team-member img {
-            width: 150px; /* Fixed size, adjust as needed */
-            height: 200px; /* Fixed size, adjust as needed */
-            border-radius: 20px; /* Circular images */
-            object-fit: cover; /* Ensure the image covers the area */
-            margin-bottom: 0.5rem;
-            border: 3px solid #ddd;
-        }
-        .team-member h4 {
-            margin-bottom: 0.25rem;
-        }
-
-        .team-member p {
-            font-size: 0.9rem;
+        .popup-description {
+            margin-bottom: 1.5rem;
             color: #666;
         }
 
-        /* Testimonials Section Styles */
-        .testimonials-section {
-          max-width: 1200px;
-          margin: 0 auto;
-          padding: 1.5rem;
+        .form-group {
+            margin-bottom: 1rem;
         }
-        .testimonials {
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsive grid */
-          gap: 1.5rem;
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #333;
+            font-weight: bold;
         }
-        .testimonial {
+        .form-group input[type="text"],
+        .form-group input[type="email"],
+        .form-group input[type="tel"],
+        .form-group input[type="number"]
+         {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease; /* Smooth transition for focus */
+        }
+
+        /*  Focus styles for inputs */
+        .form-group input[type="text"]:focus,
+        .form-group input[type="email"]:focus,
+        .form-group input[type="tel"]:focus,
+        .form-group input[type="number"]:focus
+        {
+            border-color: #2c3e50; /*  Highlight color */
+            outline: none;          /*  Remove default outline */
+            box-shadow: 0 0 5px rgba(44, 62, 80, 0.3);  /* Subtle glow */
+        }
+
+
+        .popup .price {
+          font-size: 1.2rem;
+          font-weight: bold;
+          color: #e74c3c;
+          margin-bottom: 1rem;
+        }
+
+        .popup .cta-button {
+            width: 100%; /* Make the button full-width */
+            margin-top: 1.5rem; /* More space above the button */
+        }
+        /*  Payment popup styles */
+        .payment-popup {
+          /*  You can reuse .popup styles for consistency */
           background-color: #fff;
           border-radius: 8px;
-          box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-          padding: 1.5rem;
-          text-align: left;
-          border: 1px solid #ddd; /* Add subtle border */
+          box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+          padding: 2rem;
+          width: 90%;
+          max-width: 500px;
+          position: relative;
         }
 
-        .testimonial p {
-          margin-bottom: 0.5rem;
-            line-height: 1.4;
+        .payment-popup h3 {
+          margin-bottom: 1rem;
+          color: #2c3e50;
         }
-        .testimonial-author {
-          font-style: italic;
-          color: #666;
-          text-align: right;
-          margin-top: .5rem;
+        .payment-form .form-group {
+          margin-bottom: 1rem;
         }
 
-/* Merch Section Styles */
-.merch-section {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 1.5rem;
-    text-align: center;
-}
+        .payment-form label {
+          display: block;
+          margin-bottom: 0.3rem; /* less margin */
+          color: #333;
+        }
 
-.merch-items {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 1.5rem;
-}
+        .payment-form input[type="text"],
+        .payment-form input[type="number"] {
+          width: 100%;
+          padding: 0.5rem; /* less padding */
+          border: 1px solid #ccc; /* Lighter border */
+          border-radius: 4px;
+          font-size: 0.9rem; /* Slightly smaller font */
+        }
 
-.merch-item {
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    padding: 1rem;
-    text-align: center;
-    border: 1px solid #ddd; /* Add a subtle border */
-}
+        .payment-form .cta-button {
+          width: 100%;
+          padding: 0.6rem; /* Slightly smaller padding */
+          margin-top: 1rem;
+        }
 
-.merch-item img {
-    width: 100%; /* Make images responsive within their container */
-    height: auto; /* Limit image height */
-    object-fit: cover; /* Ensure images cover the space */
-    border-radius: 8px;
-    margin-bottom: 0.5rem;
-}
+        /* Loading Indicator */
+        .loading-indicator {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 1rem 0;
+        }
+        .spinner {
+          border: 4px solid rgba(0, 0, 0, 0.1);
+          border-left-color: #2c3e50; /* Use your main color */
+          border-radius: 50%;
+          width: 30px;
+          height: 30px;
+          animation: spin 1s linear infinite;
+        }
 
-.merch-item h4 {
-    margin-bottom: 0.5rem;
-    color: #2c3e50;
-}
+        @keyframes spin {
+          to { transform: rotate(360deg); }
+        }
 
-.merch-item p {
-    color: #666;
-    margin-bottom: 0.75rem;
-}
-
-.merch-item .price {
-    font-weight: bold;
-    color: #e74c3c;
-    margin-bottom: 0.5rem;
-}
-
-        footer { /* Simple footer */
+        .success-message {
           text-align: center;
-          padding: 1rem;
-          /* Gradient for footer */
-          background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
-          color: white;
+          margin-top: 2rem;
+        }
+        .success-icon {
+          color: green;
+          font-size: 3rem;
+          margin-bottom: 1rem;
         }
 
-        /* Media Queries for Responsiveness */
-        @media (max-width: 768px) {
-            .nav-toggle {
-                display: block; /* Show burger button on small screens */
-            }
-
-            nav ul {
-                display: none; /* Hide the regular navigation */
-            }
-
-            header{
-                position: relative; /* so you can use absolute positioning*/
-            }
-
-            h1{
-               font-size: 1.8rem;
-            }
-            h2{
-                font-size: 1.6rem;
-            }
-            h3{
-                font-size: 1.4rem;
-            }
-
-            .plans-container {
-                padding: 1rem; /* Less padding on smaller screens */
-            }
-
-            .north-korea-image{
-                max-width: 90%;
-            }
-            .team-members{
-                grid-template-columns: 1fr; /*Single column */
-            }
+        .success-text {
+          font-size: 1.1rem;
+          color: #333;
+          margin-bottom: 1.5rem; /* Space before the close button */
         }
+
+        .ask-expert-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1001; /* Above other content, but below overlays */
+        }
+
+        .ask-expert-icon {
+            background-color: #2c3e50; /* Use your main color */
+            color: #fff;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            font-size: 1.5rem; /* Adjust as needed */
+            transition: background-color 0.3s ease;
+        }
+        .ask-expert-icon:hover{
+            background-color: #34495e;
+        }
+
+        .ask-expert-chat {
+            display: none; /* Hidden by default */
+            position: absolute;
+            bottom: 60px; /* Position above the icon */
+            right: 0;
+            width: 300px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 1rem;
+            border: 1px solid #ddd;
+            /*  Add a max-height and make it scrollable */
+            max-height: 400px; /* Or whatever height you prefer */
+            overflow-y: auto;
+        }
+        .ask-expert-chat.active{
+            display: block;
+        }
+
+        .ask-expert-chat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 0.5rem;
+        }
+
+        .ask-expert-chat h4 {
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+        }
+
+        .ask-expert-close {
+            cursor: pointer;
+            color: #999;
+            border: none;
+            background: none;
+            font-size: 1.2rem;
+             padding: 0; /* remove default button padding */
+            line-height: 1;
+        }
+        .ask-expert-close:hover{
+            color: #333;
+        }
+
+        .ask-expert-messages {
+            /*  Remove max-height here, it's on the chat container now */
+            margin-bottom: 1rem;
+        }
+        .ask-expert-message {
+            margin-bottom: 0.5rem;
+            padding: 0.5rem;
+            border-radius: 4px;
+        }
+
+        /* User message styling */
+        .user-message {
+            background-color: #e0e0e0; /* Light grey */
+            color: #333;
+            align-self: flex-end; /* Align to the right */
+            max-width: 70%; /* Limit message width */
+            margin-left: auto; /* Push to the right */
+            border: 1px solid #ccc;
+        }
+
+        /* Expert message styling */
+        .expert-message {
+            background-color: #f0f8ff; /* Aliceblue */
+            color: #333;
+            align-self: flex-start;/* Align to the left */
+             max-width: 70%;/* Limit message width */
+             margin-right: auto; /* Push to the left */
+            border: 1px solid #add8e6;
+        }
+
+        .ask-expert-input-container{
+            border-top: 1px solid #eee;
+            padding-top: 0.5rem;
+        }
+
+        /* Typing Indicator */
+        .typing-indicator {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.5rem;
+            padding: 0.5rem;
+            border-radius: 4px;
+             background-color: #f0f8ff; /* Aliceblue */
+              max-width: 70%;/* Limit message width */
+
+        }
+
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            background-color: #888;
+            border-radius: 50%;
+            margin-right: 4px;
+            animation: bounce 1.2s infinite;
+        }
+        .typing-dot:nth-child(2) {
+          animation-delay: 0.2s;
+        }
+        .typing-dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes bounce {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-5px); }
+        }
+
+        /* Style the select element */
+        #questionSelect {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            background-color: #fff;
+            appearance: none; /* Remove default arrow */
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            /* Add a custom arrow (optional) */
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 5'%3E%3Cpath d='M0 0l4 5 4-5z' fill='%23999'/%3E%3C/svg%3E"); /* gray down arrow */
+            background-repeat: no-repeat;
+            background-position: right 0.5rem center;
+            background-size: 8px 5px; /* Adjust size of the arrow */
+        }
+        /*  Hover and focus styles for the select */
+        #questionSelect:hover,
+        #questionSelect:focus {
+            border-color: #2c3e50; /* Highlight color */
+            outline: none;
+            box-shadow: 0 0 3px rgba(44, 62, 80, 0.3);
+        }
+
 
     </style>
 </head>
@@ -487,7 +467,7 @@
                         <li>Виза</li>
                     </ul>
                     <p class="price">2999 руб</p>
-                    <a href="#contacts" class="cta-button">Заказать</a>
+                    <button class="cta-button" data-product="Basic">Заказать</button>
                 </div>
 
                 <div class="plan">
@@ -497,7 +477,7 @@
                         <li>Билет на самолёт</li>
                     </ul>
                     <p class="price">5999 руб</p>
-                    <a href="#contacts" class="cta-button">Заказать</a>
+                   <button class="cta-button" data-product="Starter">Заказать</button>
                 </div>
 
                 <div class="plan">
@@ -508,7 +488,7 @@
                         <li>Проживание</li>
                     </ul>
                     <p class="price">10999 руб</p>
-                    <a href="#contacts" class="cta-button">Заказать</a>
+                    <button class="cta-button" data-product="Pro">Заказать</button>
                 </div>
 
                 <div class="plan">
@@ -520,7 +500,7 @@
                         <li>Разрешение на ношение любой одежды и прически</li>
                     </ul>
                     <p class="price">19999 руб</p>
-                    <a href="#contacts" class="cta-button">Заказать</a>
+                   <button class="cta-button" data-product="Premium">Заказать</button>
                 </div>
 
                 <div class="plan">
@@ -533,7 +513,7 @@
                         <li>Персональная встреча с Ким Чен Ыном</li>
                     </ul>
                     <p class="price">29999 руб</p>
-                    <a href="#contacts" class="cta-button">Заказать</a>
+                   <button class="cta-button" data-product="Delux">Заказать</button>
                 </div>
 
                 <div class="plan">
@@ -547,7 +527,7 @@
                         <li>Для больших компаний (от 10 человек)</li>
                     </ul>
                     <p class="price">от 99999 руб</p>
-                    <a href="#contacts" class="cta-button">Заказать</a>
+                    <button class="cta-button" data-product="Enterprise">Заказать</button>
                 </div>
 
             </div>
@@ -598,28 +578,28 @@
                     <h4>Футболка "Лидер"</h4>
                     <p>Классическая футболка с изображением лидера.</p>
                     <p class="price">1800 руб</p>
-                    <a href="#contacts" class="cta-button">Заказать</a>
+                    <button class="cta-button" data-product='Футболка "Лидер"'>Заказать</button>
                 </div>
                 <div class="merch-item">
                     <img src="https://i.ibb.co/Z1HG2DK0/photo-3-2025-02-24-22-37-37.jpg" alt="Футболка 2">
                     <h4>Футболка "Чосон"</h4>
                     <p>Футболка с Чосоном - корейским названием КНДР.</p>
                     <p class="price">1800 руб</p>
-                    <a href="#contacts" class="cta-button">Заказать</a>
+                    <button class="cta-button" data-product='Футболка "Чосон"'>Заказать</button>
                 </div>
                 <div class="merch-item">
                     <img src="https://i.ibb.co/8FqPnpn/photo-2-2025-02-24-22-37-37.jpg" alt="Футболка 3">
                     <h4>Футболка "КНДР"</h4>
-                    <p>Футболка с флагом КНДР.</p>
+                    <p>Футболка с флагом КНДР. Качетвенный материал.</p>
                     <p class="price">1500 руб</p>
-                    <a href="#contacts" class="cta-button">Заказать</a>
+                    <button class="cta-button" data-product='Футболка "КНДР"'>Заказать</button>
                 </div>
                 <div class="merch-item">
                     <img src="https://i.ibb.co/kgk0b1zT/photo-1-2025-02-24-22-53-23.jpg" alt="Футболка 3">
                     <h4>Худи "Чосон"</h4>
                     <p>Хади с Чосоном - корейским названием КНДР.</p>
                     <p class="price">5000 руб</p>
-                    <a href="#contacts" class="cta-button">Заказать</a>
+                    <button class="cta-button" data-product='Худи "Чосон"'>Заказать</button>
                 </div>
             </div>
         </section>
@@ -706,44 +686,356 @@
         <p>© 2025 KNDR Visa.  Весь контент является приколом.</p>
     </footer>
 
-    <script>
-      //  JavaScript for the FAQ section
-      document.querySelectorAll('.faq-question').forEach(question => {
-          question.addEventListener('click', () => {
-              const faqItem = question.parentElement;
-              faqItem.classList.toggle('active');
+    <div class="ask-expert-container">
+        <div class="ask-expert-icon" id="askExpertIcon">
+            ?
+        </div>
+        <div class="ask-expert-chat" id="askExpertChat">
+            <div class="ask-expert-chat-header">
+                <h4>Спросите эксперта</h4>
+                <button class="ask-expert-close" id="closeAskExpert">×</button>
+            </div>
+            <div class="ask-expert-messages" id="expertMessages">
+               <!-- Messages will be displayed here -->
+
+            </div>
+             <div class="ask-expert-input-container">
+                <select id="questionSelect">
+                    <option value="">Выберите вопрос...</option>
+                    <!-- Questions will be added here via JavaScript -->
+                </select>
+            </div>
+            <div class="typing-indicator" id="typingIndicator" style="display: none;">
+                <span class="typing-dot"></span>
+                <span class="typing-dot"></span>
+                <span class="typing-dot"></span>
+            </div>
+        </div>
+    </div>
+
+    
+
+     <!-- Order Form Popup -->
+    <div class="overlay" id="orderOverlay">
+        <div class="popup">
+            <button class="popup-close" id="closeOrderPopup">×</button>
+            <h3 id="popupTitle"></h3>
+            <p class="popup-description" id="popupDescription"></p>
+            <p class="price" id="popupPrice"></p>
+            <form id="orderForm">
+                <div class="form-group">
+                    <label for="fullName">Имя и Фамилия</label>
+                    <input type="text" id="fullName" name="fullName" required>
+                </div>
+                <div class="form-group">
+                    <label for="phoneNumber">Номер телефона (необязательно)</label>
+                    <input type="tel" id="phoneNumber" name="phoneNumber">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="country">Страна</label>
+                    <input type="text" id="country" name="country" required>
+                </div>
+                <div class="form-group">
+                    <label for="city">Город</label>
+                    <input type="text" id="city" name="city" required>
+                </div>
+                 <div class="form-group">
+                    <label for="address">Адрес</label>
+                    <input type="text" id="address" name="address" required>
+                </div>
+
+                <button type="submit" class="cta-button">Заказать</button>
+            </form>
+        </div>
+    </div>
+
+
+    <!-- Payment Form Popup -->
+    <div class="overlay" id="paymentOverlay">
+      <div class="payment-popup">
+           <button class="popup-close" id="closePaymentPopup">×</button>
+          <h3 id="paymentTitle">Оплата</h3>
+            <div id="paymentContent">
+              <form class="payment-form" id="paymentForm">
+                <div class="form-group">
+                  <label for="cardNumber">Номер карты</label>
+                  <input type="text" id="cardNumber" name="cardNumber" placeholder="XXXX XXXX XXXX XXXX" required>
+                </div>
+                <div class="form-group">
+                  <label for="expiryDate">Срок действия</label>
+                  <input type="text" id="expiryDate" name="expiryDate" placeholder="MM/ГГ" required>
+                </div>
+                <div class="form-group">
+                  <label for="cvv">CVV</label>
+                  <input type="number" id="cvv" name="cvv" placeholder="XXX" required>
+                </div>
+                <button type="submit" class="cta-button">Оплатить</button>
+              </form>
+              <div class="loading-indicator" style="display: none;">
+                  <div class="spinner"></div>
+              </div>
+          </div>
+          <!--  Success Message (initially hidden) -->
+          <div class="success-message" style="display: none;">
+            <div class="success-icon">✔</div>
+            <p class="success-text" id="successText"></p>
+            <button class="cta-button" id="closeSuccessPopup">Закрыть</button>
+        </div>
+    </div>
+  </div>
+
+  <script>
+    //  JavaScript for the FAQ section
+    document.querySelectorAll('.faq-question').forEach(question => {
+        question.addEventListener('click', () => {
+            const faqItem = question.parentElement;
+            faqItem.classList.toggle('active');
+        });
+    });
+
+    // JavaScript for the Burger Menu
+      const navToggle = document.querySelector('.nav-toggle');
+      const navMenu = document.querySelector('nav ul');
+
+      navToggle.addEventListener('click', () => {
+          navMenu.classList.toggle('show');  // Add/remove 'show' class
+          navToggle.classList.toggle('open'); // Add/remove 'open' class for the animation
+
+          //  Crucial:  Handle case where main nav is *also* visible (desktop)
+          if (window.innerWidth <= 768) { //  Only apply on mobile
+              navMenu.classList.add('mobile-nav'); // Ensure correct styling on mobile
+           }
+      });
+
+       // Hide the mobile menu when the window is resized above 768px
+      window.addEventListener('resize', () => {
+          if (window.innerWidth > 768) {
+            navMenu.classList.remove('show', 'mobile-nav');
+            navToggle.classList.remove('open'); // reset the button state
+            navMenu.style.display = ''; // remove any inline display styles
+          } else {
+              navMenu.classList.add('mobile-nav'); // Ensure .mobile-nav is added
+          }
+      });
+
+      // Initial check on load
+      if (window.innerWidth <= 768) {
+          navMenu.classList.add('mobile-nav');
+      }
+
+      // ---  New JavaScript for Forms and Popups ---
+
+      const orderOverlay = document.getElementById('orderOverlay');
+      const paymentOverlay = document.getElementById('paymentOverlay');
+      const closeOrderPopup = document.getElementById('closeOrderPopup');
+      const closePaymentPopup = document.getElementById('closePaymentPopup');
+      const closeSuccessPopup = document.getElementById('closeSuccessPopup');
+      const orderForm = document.getElementById('orderForm');
+      const paymentForm = document.getElementById('paymentForm');
+      const popupTitle = document.getElementById('popupTitle');
+      const popupDescription = document.getElementById('popupDescription');
+      const popupPrice = document.getElementById('popupPrice');
+      const paymentContent = document.getElementById('paymentContent');
+      const successMessage = document.querySelector('.success-message');
+      const successText = document.getElementById('successText');
+      const loadingIndicator = document.querySelector('.loading-indicator');
+
+      let currentProductType = ''; // 'tariff' or 'merch'
+      let currentProductName = '';
+      let currentProductPrice = '';
+
+      // Function to open the order form popup
+      function openOrderForm(productName, productPrice) {
+            // Determine product type
+            // Escape the product name for use in a CSS selector
+            const escapedProductName = productName.replace(/"/g, '\\"'); 
+            currentProductType = document.querySelector(`[data-product="${escapedProductName}"]`).closest('.plan') ? 'tariff' : 'merch';
+            currentProductName = productName;
+            currentProductPrice = productPrice;
+
+            popupTitle.textContent = `Заказать ${productName}`;
+            // You might want to add more detailed descriptions based on productName.
+            popupDescription.textContent = `Оформление заказа на ${productName}.`;
+            popupPrice.textContent = `Цена: ${productPrice}`;
+
+
+            orderOverlay.classList.add('active');
+        }
+
+      // Event listeners for "Заказать" buttons
+      document.querySelectorAll('.cta-button[data-product]').forEach(button => {
+          button.addEventListener('click', (event) => {
+              event.preventDefault(); // Prevent default anchor behavior
+              const productName = button.dataset.product;
+              const productPrice = button.parentElement.querySelector('.price').textContent;
+              openOrderForm(productName, productPrice);
           });
       });
 
-      // JavaScript for the Burger Menu
-        const navToggle = document.querySelector('.nav-toggle');
-        const navMenu = document.querySelector('nav ul');
+      // Close order form popup
+      closeOrderPopup.addEventListener('click', () => {
+          orderOverlay.classList.remove('active');
+          orderForm.reset(); // Clear the form
+      });
 
-        navToggle.addEventListener('click', () => {
-            navMenu.classList.toggle('show');  // Add/remove 'show' class
-            navToggle.classList.toggle('open'); // Add/remove 'open' class for the animation
 
-            //  Crucial:  Handle case where main nav is *also* visible (desktop)
-            if (window.innerWidth <= 768) { //  Only apply on mobile
-                navMenu.classList.add('mobile-nav'); // Ensure correct styling on mobile
-             }
+      // Order form submission
+      orderForm.addEventListener('submit', (event) => {
+          event.preventDefault();
+          // Basic Form Validation (you can add more)
+          if (!orderForm.fullName.value || !orderForm.email.value || !orderForm.country.value || !orderForm.city.value || !orderForm.address.value) {
+              alert('Пожалуйста, заполните все обязательные поля.');
+              return;
+          }
+
+          // Close order form and open payment form
+          orderOverlay.classList.remove('active');
+          paymentOverlay.classList.add('active');
+      });
+
+
+
+      // Close payment popup
+      closePaymentPopup.addEventListener('click', () => {
+        paymentOverlay.classList.remove('active');
+        paymentForm.reset(); // Clear the form
+        paymentContent.style.display = 'block';       // Reset display
+        successMessage.style.display = 'none';     // Reset display
+        loadingIndicator.style.display = 'none';    // Reset display
+      });
+
+      //Close Success popup
+      closeSuccessPopup.addEventListener('click', () => {
+          paymentOverlay.classList.remove('active'); // Close the *payment* overlay
+          paymentForm.reset();          // Clear form
+          paymentContent.style.display = 'block';  // Reset
+          successMessage.style.display = 'none'; // Reset
+      });
+
+
+      // Payment form submission
+      paymentForm.addEventListener('submit', (event) => {
+          event.preventDefault();
+          // Basic form validation
+          if(!paymentForm.cardNumber.value || !paymentForm.expiryDate.value || !paymentForm.cvv.value){
+              alert("Пожалуйста, заполните все поля");
+              return;
+          }
+
+          // Simulate payment processing
+          paymentContent.style.display = 'none';  // Hide form
+          loadingIndicator.style.display = 'flex'; // Show loader
+
+          setTimeout(() => {
+              loadingIndicator.style.display = 'none'; // Hide loader
+              successMessage.style.display = 'block';  // Show success
+
+              // Set success message based on product type
+              if (currentProductType === 'tariff') {
+                  successText.textContent = 'Спасибо за покупку, в течении 2 часов с вами свяжется наш специалист по предоставленной почте или номеру телефона';
+              } else {
+                  successText.textContent = 'Спасибо за покупку, ваш заказ подтверждён, в течении 12 дней товар будет доставлен по указанному адресу нашим курьером';
+              }
+
+          }, 2000); // Simulate 2-second processing
+      });
+
+
+      const askExpertIcon = document.getElementById('askExpertIcon');
+        const askExpertChat = document.getElementById('askExpertChat');
+        const closeAskExpert = document.getElementById('closeAskExpert');
+        const expertMessages = document.getElementById('expertMessages');
+        const questionSelect = document.getElementById('questionSelect');
+        const typingIndicator = document.getElementById('typingIndicator');
+
+        const questions = [
+            { question: "Как быстро я получу визу?", answer: "Обычно оформление визы занимает от 10 до 20 рабочих дней." },
+            { question: "Какие документы нужны?", answer: "Вам понадобится загранпаспорт, фотография, заполненная анкета и подтверждение бронирования тура." },
+            { question: "Можете ли вы помочь с бронированием тура?", answer: "Да, мы можем помочь вам с бронированием тура через наших проверенных партнеров." },
+            { question: "Какая стоимость визы?", answer: "Стоимость визы зависит от выбранного вами тарифного плана." },
+            { question: "Разрешено ли ношение любой прически в КНДР?", answer: "Да, ношение любой прически в КНДР разрешено только по тарифу Premium и выше, либо по дополнительному согласованию." },
+            { question: "Можно ли фотографировать в КНДР?", answer: "Фотографировать можно, но с ограничениями.  Нельзя фотографировать военных, строительные объекты и некоторые другие объекты.  Всегда следуйте указаниям гида." },
+            { question: "Какую валюту брать с собой?", answer: "Рекомендуется брать с собой евро или доллары США.  Обмен валюты производится в специальных обменных пунктах." },
+            { question: "Нужна ли страховка для поездки?", answer: "Да, наличие туристической страховки обязательно." },
+            { question: "Есть ли ограничения на ввоз вещей?", answer: "Да, есть ограничения на ввоз некоторых предметов, таких как дроны, книги и фильмы о Северной Корее, оружие и наркотики.  Полный список можно найти на нашем сайте." },
+            { question: "Можно ли пользоваться мобильным телефоном?", answer: "Использование местных SIM-карт разрешено, но международный роуминг может быть недоступен или очень дорогим.  Wi-Fi доступен в некоторых отелях." },
+            { question: "Какие сувениры можно привезти?", answer: "Можно привезти традиционные корейские сувениры, такие как вышивка, керамика, марки и книги (разрешенные к вывозу)." },
+            { question: "Как одеваться в КНДР?", answer: "Рекомендуется скромная одежда, закрывающая плечи и колени.  Избегайте одежды с американской или южнокорейской символикой." },
+            { question: "Нужно ли знать корейский язык?", answer: "Знание корейского языка не обязательно, но приветствуется.  Вас будет сопровождать гид, владеющий русским языком." },
+            { question: "Какая еда в Северной Корее?", answer: "Корейская кухня разнообразна и включает в себя рис, лапшу, овощи, мясо и морепродукты.  Популярные блюда: кимчи, пибимпап, куксу." },
+            { question: "Безопасно ли путешествовать в КНДР?", answer: "Путешествие в КНДР с аккредитованным туроператором, как правило, безопасно.  Важно соблюдать местные законы и правила, а также следовать указаниям гида." },
+            { question: "Как получить визу для ребенка?", answer: "Для получения визы для ребенка требуется тот же пакет документов, что и для взрослого, а также свидетельство о рождении и нотариально заверенное согласие на выезд от обоих родителей (если ребенок путешествует с одним из родителей или без родителей)." },
+            { question: "Можно ли путешествовать самостоятельно?", answer: "Самостоятельные путешествия в КНДР не разрешены.  Все туристы должны путешествовать в составе организованной группы с аккредитованным туроператором." },
+            { question: "Что делать, если я потерял паспорт в КНДР?", answer: "Немедленно сообщите об этом вашему гиду и в посольство вашей страны." },
+            { question: "Какие прививки нужны?", answer: "Рекомендуется проконсультироваться с врачом по поводу прививок перед поездкой.  Обязательных прививок нет." },
+            { question: "Есть ли дресс-код при посещении мавзолея Ким Ир Сена?", answer: "Да, при посещении мавзолея требуется строгая одежда: темный костюм и галстук для мужчин, темное платье или костюм для женщин.  Запрещены джинсы, шорты, открытая обувь." },
+            { question: "Можно ли провозить с собой лекарства?", answer: "Можно провозить лекарства для личного пользования, но желательно иметь при себе рецепт от врача." },
+            { question: "Есть ли возможность посетить демилитаризованную зону (ДМЗ)?", answer: "Да, посещение ДМЗ возможно в составе организованной экскурсии." },
+            { question: "Можно ли общаться с местными жителями?", answer: "Общение с местными жителями ограничено и возможно только в присутствии гида." },
+            { question: "Что будет, если нарушить правила?", answer: "Нарушение правил может привести к серьезным последствиям, включая штрафы, задержание и депортацию." },
+            { question: "Можно ли использовать кредитные карты?", answer: "Использование кредитных карт в КНДР практически невозможно.  Рекомендуется иметь при себе наличные деньги." },
+            { question: "Есть ли интернет в КНДР?", answer: "Доступ в интернет ограничен и предоставляется в основном в отелях для иностранцев." },
+            { question: "Можно ли вывозить антиквариат?", answer: "Вывоз антиквариата и предметов, представляющих культурную ценность, запрещен без специального разрешения." },
+            { question: "Какие розетки используются в КНДР?", answer: "В КНДР используются розетки типов C и F (европейский стандарт).  Напряжение в сети 220 В." },
+            { question: "Нужно ли давать чаевые?", answer: "Чаевые не являются обязательными, но приветствуются." },
+            { question: "Как оформить визу, если я журналист?", answer: "Для журналистов предусмотрен особый порядок оформления визы. Вам необходимо обратиться в посольство КНДР для получения подробной информации." },
+            { question: "Могу ли я посетить КНДР, если у меня есть виза Южной Кореи?", answer: "Наличие визы Южной Кореи не является препятствием для посещения КНДР, но может вызвать дополнительные вопросы при оформлении визы." }
+
+        ];
+
+        // Populate the select options
+        questions.forEach(q => {
+            const option = document.createElement('option');
+            option.value = q.question;
+            option.textContent = q.question;
+            questionSelect.appendChild(option);
         });
 
-         // Hide the mobile menu when the window is resized above 768px
-        window.addEventListener('resize', () => {
-            if (window.innerWidth > 768) {
-              navMenu.classList.remove('show', 'mobile-nav');
-              navToggle.classList.remove('open'); // reset the button state
-              navMenu.style.display = ''; // remove any inline display styles
-            } else {
-                navMenu.classList.add('mobile-nav'); // Ensure .mobile-nav is added
+        askExpertIcon.addEventListener('click', () => {
+            askExpertChat.classList.toggle('active');
+        });
+
+        closeAskExpert.addEventListener('click', () => {
+            askExpertChat.classList.remove('active');
+        });
+        // Function to add a message to the chat
+        function addMessage(message, type) {
+            const messageDiv = document.createElement('div');
+            messageDiv.classList.add('ask-expert-message', type);
+            messageDiv.textContent = message;
+            expertMessages.appendChild(messageDiv);
+            // Scroll to the bottom of the messages container
+             expertMessages.scrollTop = expertMessages.scrollHeight;
+        }
+
+        questionSelect.addEventListener('change', () => {
+            const selectedQuestion = questionSelect.value;
+            if (selectedQuestion) {
+                // Add user's question to the chat
+                addMessage(selectedQuestion, 'user-message');
+
+                // Find the answer to the selected question
+                const selectedAnswer = questions.find(q => q.question === selectedQuestion).answer;
+
+                 // Show typing indicator
+                typingIndicator.style.display = 'flex';
+
+                // Simulate typing delay and add expert's answer
+                setTimeout(() => {
+                    typingIndicator.style.display = 'none'; // Hide typing indicator
+                    addMessage(selectedAnswer, 'expert-message');
+                     // Reset select to default option
+                    questionSelect.value = "";
+                }, 3000);
+
+
             }
         });
 
-        // Initial check on load
-        if (window.innerWidth <= 768) {
-            navMenu.classList.add('mobile-nav');
-        }
-    </script>
+  </script>
 </body>
 </html>
